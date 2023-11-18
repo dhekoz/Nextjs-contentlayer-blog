@@ -1,7 +1,5 @@
 import { sortBlogs } from "@/src/utils";
 import React from "react";
-import BlogLayoutOne from "../Blog/BlogLayoutOne";
-import BlogLayoutTwo from "../Blog/BlogLayoutTwo";
 
 const RecentPosts = ({ blogs }) => {
   const sortedBlogs = sortBlogs(blogs);
@@ -10,7 +8,6 @@ const RecentPosts = ({ blogs }) => {
       <h2 className="w-full inline-block font-bold capitalize text-4xl">
         Recent Posts
       </h2>
-     
     </section>
   );
 };
