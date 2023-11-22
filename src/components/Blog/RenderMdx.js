@@ -17,7 +17,9 @@ const RenderMdx = ({ blog }) => {
     prose-blockquote:px-6
     prose-blockquote:border-accent
     prose-blockquote:not-italic
-    prose-blockquote:rounded-r-lg"
+    prose-blockquote:rounded-r-lg
+    
+    prose-li:marker:text-accent"
     >
       <MDXContent components={mdxComponents} />
     </div>
