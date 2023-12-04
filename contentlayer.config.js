@@ -5,6 +5,7 @@ import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { github } from "./project files/siteMetaData";
+import GithubSlugger from "github-slugger";
 
 const Blog = defineDocumentType(() => ({
   name: "Blog",
@@ -50,12 +51,32 @@ const Blog = defineDocumentType(() => ({
       type: "json",
       resolve: (doc) => readingTime(doc.body.raw),
     },
+    toc: {
+      type: "json",
+      resolve: async (doc) => {
+        const regulrExp = /\n(?<flag>#{1,6})\s+(?<content>.+)/g;
+        const slugger = new GithubSlugger();
+        const headings = Array.from(post.body.raw.matchAll(regulrExp)).map(
+          ({ groups }) => {
+            const flag = groups?.flag;
+            const content = groups?.content;
+            return {
+              level:
+                flag?.length == 1 ? "one" : flag?.length == 2 ? "two" : "three",
+              text: content,
+              slug: content ? slugger.slug(content) : undefined,
+            };
+          }
+        );
+        return true;
+      },
+    },
   },
 }));
 
 const codeOptions = {
-  theme:"github-dark"
-}
+  theme: "github-dark",
+};
 
 export default makeSource({
   /* options */
@@ -70,3 +91,5 @@ export default makeSource({
     ],
   },
 });
+
+return headings;
